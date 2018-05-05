@@ -1,0 +1,26 @@
+﻿
+@{
+    ViewBag.Title = "NuevaCosecha";
+}
+
+<h2>Nueva Cosecha</h2>
+<br />
+<form class="form-horizontal" method="post">
+    <div class="form-group">
+        <label for="añocosecha" class="col-sm-2 control-label">Año de la cosecha:</label>
+        <div class="col-sm-10">
+            <input name="AñoCosecha" type="number" class="form-control" id="añoCosecha" placeholder="Ingrese el año de la cosecha">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="descripcion" class="col-sm-2 control-label">Descripcion:</label>
+        <div class="col-sm-10">
+            <input name="Descripcion" type="text" class="form-control" id="descripcion" placeholder="Ingrese una descripcion opcional">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Aceptar</button>
+        </div>
+    </div>
+</form>

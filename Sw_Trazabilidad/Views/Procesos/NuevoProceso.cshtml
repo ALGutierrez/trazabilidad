@@ -1,0 +1,175 @@
+﻿
+@{
+    ViewBag.Title = "NuevoProceso";
+}
+
+<h2>Nuevo Proceso</h2>
+<br />
+<form>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label>Fecha:</label>
+            <input name="Fecha" type="date" id="fecha" class="form-control">
+        </div>
+        <div class="form-group">
+            <label>Es una recepcion?</label>
+            <label><input id="radioSi" type="radio" name="EsRecepecion">Si</label>
+            <label><input id="radioNo" type="radio" name="EsRecepcion" checked>No</label>
+        </div>
+    </div>
+    <br />
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label>Nombre del proceso:</label>
+            <input name="NombreP" type="text" class="form-control" id="nombreP" placeholder="Ingrese el nombre">
+        </div>
+        <div class="input-group form-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-inbox"></i></span>
+            <input id="cant" type="text" class="form-control" name="Cantidad" style="width:150px" placeholder="Ingrese la cantidad">
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="panel-group">
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="text-align:center">Producto salida</div>
+                    <div class="panel-body">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label for="focusedInput">Codigo</label>
+                                <input name="CodigoProductoSalida" class="form-control" id="focusedInput" type="text" style="width:100px" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword">Producto</label>
+                                <input name="NombreProductoSalida" class="form-control" id="disabledInput" type="text" disabled>
+                            </div>
+                            <div class="form-group"><button type="button" class="btn btn-primary btn-sm">Buscar</button></div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="text-align:center">Producto entrada</div>
+                    <div class="panel-body">
+                        <div class="form-inline">
+                            <div class="form-group">
+                                <label for="focusedInput">Codigo</label>
+                                <input name="CodigoProductoEntrada" class="form-control" id="focusedInput" style="width:100px" type="text" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label for="inputPassword">Producto</label>
+                                <input name="NombreProductoEntrada" class="form-control" id="disabledInput" type="text" disabled>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="form-horizontal">
+        <div class="form-group" id="proveedor" hidden>
+            <label for="sel1">Proveedor</label>
+            <select name="Proveedor" class="form-control" id="sel1">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+            </select>
+            <br />
+        </div>
+        <div class="form-group" id="lote">
+            <label for="sel2">Lote</label>
+            <select name="Lote" class="form-control" id="sel2">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+            </select>
+            <br>
+        </div>
+    </div>
+    <br />
+    <div class="panel panel-default" style="width:50%" id="datos1" hidden>
+        <div class="panel-heading" style="text-align:center">Datos del producto de entrada</div>
+        <div class="panel-body">
+            <div class="form-inline">
+                <div class="form-group">
+                    <label for="sel1">Cosecha</label>
+                    <select name="Cosecha" class="form-control" id="sel1">
+                        <option>2020</option>
+                        <option>2019</option>
+                        <option>2018</option>
+                        <option>2017</option>
+                        <option>2016</option>
+                        <option>2015</option>
+                        <option>2014</option>
+                        <option>2013</option>
+                        <option>2012</option>
+                        <option>2011</option>
+                        <option>2010</option>
+                        <option>2009</option>
+                        <option>2008</option>
+                        <option>2007</option>
+                        <option>2006</option>
+                        <option>2005</option>
+                        <option>2004</option>
+                        <option>2003</option>
+                        <option>2002</option>
+                        <option>2001</option>
+                        <option>2000</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sel1">Gramaje</label>
+                    <select name="Gramaje" class="form-control" id="sel1">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sel1">Envase</label>
+                    <select name="Envase" class="form-control" id="sel1">
+                        <option>Granel</option>
+                        <option>Big Bag</option>
+                        <option>Bolsa 50 kg</option>
+                    </select>
+                </div>
+            </div>
+            <br />
+        </div>
+    </div>
+</form>
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+
+            $("#radioSi").on("click", function () {
+                if ($("#radioSi").prop("checked", true)) {
+                    $("#proveedor").removeAttr("hidden");
+                    $("#lote").attr("hidden", "true");
+                    $("#datos1").removeAttr("hidden");
+                }
+            });
+            $("#radioNo").on("click", function () { //que pasa cuando le hago click al no
+                if ($("#radioNo").prop("checked", true)) {
+                    $("#lote").removeAttr("hidden");
+                    $("#proveedor").attr("hidden", "true");
+                    $("#datos1").attr("hidden", "true");
+                }
+            });
+
+
+            
+        });
+    </script>
+}

@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewBag.Title = "NuevaEmpresa";
+}
+
+<h2>Nueva Empresa</h2>
+<br />
+<form class="form-horizontal" method="post">
+    <div class="form-group">
+        <label for="razonS" class="col-sm-2 control-label">Razon social:</label>
+        <div class="col-sm-10">
+            <input name="RazonSocial" type="text" class="form-control" id="razonS" placeholder="Ingrese el nombre de la empresa">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="cuit" class="col-sm-2 control-label">CUIT</label>
+        <div class="col-sm-10">
+            <input name="CUIT" type="text" class="form-control" id="cuit" placeholder="Ingrese el CUIT">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="direccion" class="col-sm-2 control-label">Direccion</label>
+        <div class="col-sm-10">
+            <input name="Direccion" type="text" class="form-control" id="direccion" placeholder="Ingrese la direccion">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="submit" class="btn btn-default">Aceptar</button>
+        </div>
+    </div>
+</form>
+
