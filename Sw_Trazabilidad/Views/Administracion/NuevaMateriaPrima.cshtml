@@ -21,10 +21,14 @@
     <div class="form-group">
         <label for="tipoMP" class="col-sm-2 control-label">Tipo de Materia prima:</label>
         <div class="col-sm-10">
-            <select class="form-control" id="sel1">
-                <option>Materia Prima</option>
-                <option>Semielaborado</option>
-                <option>Material empaque</option>
+            <select class="form-control" id="sel1" name="selectTipos">
+                @if (ViewBag.TiposMP != null)
+                {
+                    foreach (var tipoMP in (List<Sw_Trazabilidad.Models.Tipo_MateriaPrima>)ViewBag.TiposMP)
+                    {
+                        <option value="@tipoMP.IdTipo_MateriaPrima">@tipoMP.Nombre</option>
+                    }
+                }
             </select>
         </div>
     </div>

@@ -13,7 +13,7 @@
         </div>
         <div class="form-group">
             <label>Es una recepcion?</label>
-            <label><input id="radioSi" type="radio" name="EsRecepecion">Si</label>
+            <label><input id="radioSi" type="radio" name="EsRecepcion">Si</label>
             <label><input id="radioNo" type="radio" name="EsRecepcion" checked>No</label>
         </div>
     </div>
@@ -28,41 +28,25 @@
             <input id="cant" type="text" class="form-control" name="Cantidad" style="width:150px" placeholder="Ingrese la cantidad">
         </div>
     </div>
-    <br />
+
+    <hr />
+
     <div class="row">
         <div class="panel-group">
-            <div class="col-md-6">
+            <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     <div class="panel-heading" style="text-align:center">Producto salida</div>
                     <div class="panel-body">
                         <div class="form-inline">
                             <div class="form-group">
                                 <label for="focusedInput">Codigo</label>
-                                <input name="CodigoProductoSalida" class="form-control" id="focusedInput" type="text" style="width:100px" disabled>
+                                <input name="CodigoProductoSalida" class="form-control" id="CodigoProductoSalida" type="text" style="width:100px" disabled>
                             </div>
                             <div class="form-group">
-                                <label for="inputPassword">Producto</label>
-                                <input name="NombreProductoSalida" class="form-control" id="disabledInput" type="text" disabled>
+                                <label for="inputPassword" style="margin-left: 20px">Producto</label>
+                                <input name="NombreProductoSalida" class="form-control EntradaProductoNombre" id="NombreProductoSalida" type="text" disabled>
                             </div>
-                            <div class="form-group"><button type="button" class="btn btn-primary btn-sm">Buscar</button></div>
-                        </div>
-                        <br />
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading" style="text-align:center">Producto entrada</div>
-                    <div class="panel-body">
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <label for="focusedInput">Codigo</label>
-                                <input name="CodigoProductoEntrada" class="form-control" id="focusedInput" style="width:100px" type="text" disabled>
-                            </div>
-                            <div class="form-group">
-                                <label for="inputPassword">Producto</label>
-                                <input name="NombreProductoEntrada" class="form-control" id="disabledInput" type="text" disabled>
-                            </div>
+                            <div class="form-group"><button id="btnBuscar" type="button" class="btn btn-primary btn-sm" style="margin-left:20px">Buscar</button></div>
                         </div>
                         <br />
                     </div>
@@ -70,27 +54,57 @@
             </div>
         </div>
     </div>
+
     <br />
+
+    <!-- Tabla materia prima -->
+    <div id="divCargandoLineas" class="col-md-4 col-md-offset-4" hidden>
+        <h2 style="text-align:center">Cargando...</h2>
+    </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <div id="divTablaMateriaPrima" hidden>
+        <table class="table table-hover" id="tablaMP">
+            <thead class="bg-primary">
+                <tr>
+                    <th>
+                        Codigo
+                    </th>
+                    <th>
+                        Materia prima
+                    </th>
+                    <th>
+                        Proveedor
+                    </th>
+                    <th>
+                        Lote
+                    </th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
     <div class="form-horizontal">
         <div class="form-group" id="proveedor" hidden>
             <label for="sel1">Proveedor</label>
             <select name="Proveedor" class="form-control" id="sel1">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
+                @if (ViewBag.Proveedores != null)
+                {
+                    foreach (var proveedor in (List<Sw_Trazabilidad.Models.Empresa_Proveedor>)ViewBag.Proveedores)
+                    {
+                        <option value="@proveedor.IdEmpresa_Proveedor">@proveedor.RazonSocial</option>
+                    }
+                }
             </select>
             <br />
         </div>
         <div class="form-group" id="lote">
-            <label for="sel2">Lote</label>
-            <select name="Lote" class="form-control" id="sel2">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-            </select>
-            <br>
+            <label for="LoteSalida">Lote</label>
+            <input name="LoteSalida" type="text" class="form-control" id="loteSalida" disabled>
+            <br />
         </div>
     </div>
     <br />
@@ -101,46 +115,37 @@
                 <div class="form-group">
                     <label for="sel1">Cosecha</label>
                     <select name="Cosecha" class="form-control" id="sel1">
-                        <option>2020</option>
-                        <option>2019</option>
-                        <option>2018</option>
-                        <option>2017</option>
-                        <option>2016</option>
-                        <option>2015</option>
-                        <option>2014</option>
-                        <option>2013</option>
-                        <option>2012</option>
-                        <option>2011</option>
-                        <option>2010</option>
-                        <option>2009</option>
-                        <option>2008</option>
-                        <option>2007</option>
-                        <option>2006</option>
-                        <option>2005</option>
-                        <option>2004</option>
-                        <option>2003</option>
-                        <option>2002</option>
-                        <option>2001</option>
-                        <option>2000</option>
+                        @if (ViewBag.Cosechas != null)
+                        {
+                            foreach (var cosecha in (List<Sw_Trazabilidad.Models.Cosecha>)ViewBag.Cosechas)
+                            {
+                                <option value="@cosecha.Id_Cosecha">@cosecha.Año</option>
+                            }
+                        }
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="sel1">Gramaje</label>
                     <select name="Gramaje" class="form-control" id="sel1">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
-                        <option>6</option>
+                        @if (ViewBag.Gramajes != null)
+                        {
+                            foreach (var gramaje in (List<Sw_Trazabilidad.Models.Gramaje>)ViewBag.Gramajes)
+                            {
+                                <option value="@gramaje.Id_Gramaje">@gramaje.Peso</option>
+                            }
+                        }
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="sel1">Envase</label>
                     <select name="Envase" class="form-control" id="sel1">
-                        <option>Granel</option>
-                        <option>Big Bag</option>
-                        <option>Bolsa 50 kg</option>
+                        @if (ViewBag.Envases != null)
+                        {
+                            foreach (var envase in (List<Sw_Trazabilidad.Models.Envase>)ViewBag.Envases)
+                            {
+                                <option value="@envase.Id_Envase">@envase.Nombre_Tipo</option>
+                            }
+                        }
                     </select>
                 </div>
             </div>
@@ -149,7 +154,22 @@
     </div>
 </form>
 
+<div id="dialogBuscarProducto" title="Buscar producto">
+    <label for="seleccionarProducto">Producto:</label>
+    <select id="seleccionarProducto" class="form-control">
+        @if (ViewBag.Productos != null)
+        {
+            foreach (var producto in (List<Sw_Trazabilidad.Models.Producto>)ViewBag.Productos)
+            {
+                <option value="@producto.Id_Producto">@producto.Nombre</option>
+            }
+        }
+    </select>
+</div>
+
 @section scripts{
+    <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css" />
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
     <script>
         $(document).ready(function () {
 
@@ -160,7 +180,7 @@
                     $("#datos1").removeAttr("hidden");
                 }
             });
-            $("#radioNo").on("click", function () { //que pasa cuando le hago click al no
+            $("#radioNo").on("click", function () {
                 if ($("#radioNo").prop("checked", true)) {
                     $("#lote").removeAttr("hidden");
                     $("#proveedor").attr("hidden", "true");
@@ -168,8 +188,48 @@
                 }
             });
 
+            $("#btnBuscar").on("click", function () {
+                $("#dialogBuscarProducto").dialog("open");
+            });
 
-            
+            $("#dialogBuscarProducto").dialog({
+                autoOpen: false,
+                modal: true,
+                buttons: {
+                    "Aceptar": function () {
+                        var producto = $("#seleccionarProducto option:selected");
+                        $("#CodigoProductoSalida").val(producto.val());
+                        $("#NombreProductoSalida").val(producto.text());
+                        buscarMateriasPrimas(producto.val());
+                        $(this).dialog("close");
+                    },
+                    "Cancelar": function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+
+
+            function buscarMateriasPrimas(idProducto) {
+                $("#divCargandoLineas").removeAttr("hidden");
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("ObtenerMateriasPrimasPorProducto","Procesos")',
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify({"idProducto": idProducto}),
+                    success: function(result){
+                        $("#divCargandoLineas").attr("hidden", "true");
+                        result.map(function (mp) {
+                            $("#tablaMP tbody").append("<tr><td>" + mp.Codigo + "</td><td>" + mp.Nombre + "</td><td></td><td></td></tr>")
+                        });
+                        $("#divTablaMateriaPrima").removeAttr("hidden");
+                    },
+                    error: function(errorText){
+                    console.log(errorText);
+                    }
+                 });
+            }
         });
     </script>
 }

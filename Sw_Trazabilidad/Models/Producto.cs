@@ -17,5 +17,7 @@ namespace Sw_Trazabilidad.Models
         public string Nombre { get; set; }
         [MaxLength(45)]
         public string Descripcion { get; set; }
+
+        public virtual ICollection<Linea_Producto> LineasProducto { get; set; }
     }
 }

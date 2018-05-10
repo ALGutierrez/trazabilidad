@@ -7,13 +7,15 @@ using System.Web.Mvc;
 
 namespace Sw_Trazabilidad.Controllers
 {
-    
+
     public class AdministracionController : Controller
     {
         private readonly Contexto db = new Contexto();
         // GET: Administracion
         public ActionResult NuevaMateriaPrima()
         {
+            var tiposMP = db.TiposMateriaPrima.ToList();
+            ViewBag.TiposMP = tiposMP;
             return View();
         }
 
@@ -43,7 +45,21 @@ namespace Sw_Trazabilidad.Controllers
         }
 
         [HttpPost]
+        public ActionResult NuevaMateriaPrima(string NombreMP, string DescripcionGral, int selectTipos)
+        {
+            var tipo = db.TiposMateriaPrima.Find(selectTipos);
+            Materia_Prima mp = new Materia_Prima()
+            {
+                Nombre = NombreMP,
+                Descripcion_Gral = DescripcionGral,
+                TipoMateriaPrima = tipo
+            };
+            db.MateriasPrimas.Add(mp);
+            db.SaveChanges();
+            return View();
+        }
 
+        [HttpPost]
         public ActionResult NuevoProducto(string NombreProd, string Descripcion)
         {
             Producto producto = new Producto()
@@ -57,6 +73,7 @@ namespace Sw_Trazabilidad.Controllers
             return View();
         }
 
+        [HttpPost]
         public ActionResult NuevoTipoMateriaP(string NombreTMateriaP, string Descripcion)
         {
             Tipo_MateriaPrima tipo = new Tipo_MateriaPrima()
@@ -70,6 +87,7 @@ namespace Sw_Trazabilidad.Controllers
             return View();
         }
 
+        [HttpPost]
         public ActionResult NuevaCosecha(int AñoCosecha, string Descripcion)
         {
             Cosecha nuevaCosecha = new Cosecha()
@@ -83,6 +101,7 @@ namespace Sw_Trazabilidad.Controllers
             return View();
         }
 
+        [HttpPost]
         public ActionResult NuevoGramaje(int PesoGramaje, string Descripcion)
         {
             Gramaje gramaje = new Gramaje()
@@ -96,6 +115,7 @@ namespace Sw_Trazabilidad.Controllers
             return View();
         }
 
+        [HttpPost]
         public ActionResult NuevoEnvase(string NombreEnvase, string Descripcion)
         {
             Envase envase = new Envase()

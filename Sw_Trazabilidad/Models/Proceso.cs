@@ -18,9 +18,6 @@ namespace Sw_Trazabilidad.Models
         [Required]
         public bool Es_Recepcion { get; set;}
         [Required]
-        [MaxLength(45)]
-        public string Lote { get; set;}
-        [Required]
         public DateTime Fecha_Actividad { get; set;}
         [Required]
         public int Cantidad { get; set;}

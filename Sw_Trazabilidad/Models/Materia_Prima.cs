@@ -22,5 +22,7 @@ namespace Sw_Trazabilidad.Models
         public int IdTipo_MateriaPrima { get; set; }
         [ForeignKey("IdTipo_MateriaPrima")]
         public Tipo_MateriaPrima TipoMateriaPrima { get; set; }
+
+        public virtual ICollection<Linea_Producto> LineasProducto { get; set; }
     }
 }

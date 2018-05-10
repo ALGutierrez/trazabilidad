@@ -63,3 +63,13 @@ textarea {
         background-color: #4682B4;
         color: white;
     }
+
+.EntradaProductoNombre{
+    width: 400px !important;
+}
+
+@media only screen and (max-width: 600px){
+    .EntradaProductoNombre {
+        width: 250px !important;
+    }
+}

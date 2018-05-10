@@ -12,6 +12,10 @@ namespace Sw_Trazabilidad.Models
         [Key]
         public int Codigo_Salida { get; set; }
 
+        [Required]
+        [MaxLength(45)]
+        public string LoteSalida { get; set; }
+
         [MaxLength(45)]
         public string Descripcion_salida { get; set; }
 
