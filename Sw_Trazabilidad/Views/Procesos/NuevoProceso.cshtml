@@ -81,6 +81,9 @@
                     <th>
                         Lote
                     </th>
+                    <th style="width:8%">
+
+                    </th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -167,6 +170,23 @@
     </select>
 </div>
 
+<div id="dialogCargarLote" title="Cargar lote">
+    <input id="idLinea" type="hidden" value="-1"/>
+    <h3 id="textoCargandoLotes" class="text-center">
+        Cargando...
+    </h3>
+    <div id="dialogCargarLoteInputs" hidden>
+        <label for="dialogSelectLote">Seleccione lote:</label>
+        <select id="dialogSelectLote" class="form-control">
+
+        </select>
+        <label for="dialogSelectProveedor">Seleccione proveedor:</label>
+        <select id="dialogSelectProveedor" class="form-control">
+
+        </select>
+    </div>
+</div>
+
 @section scripts{
     <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css" />
     <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
@@ -209,6 +229,26 @@
                 }
             });
 
+            $("#dialogCargarLote").dialog({
+                autoOpen: false,
+                modal: true,
+                buttons: {
+                    "Aceptar": function () {
+                        var id = $("#idLinea").val();
+                        var lote = $("#dialogSelectLote option:selected");
+                        var proveedor = $("#dialogSelectProveedor option:selected");
+                        var row = $("td").filter(function () {
+                            return $(this).text() == id;
+                        }).closest("tr");
+                        row.find(".cell-lote").html(lote.text());
+                        row.find(".cell-proveedor").html(proveedor.text())
+                        $(this).dialog("close");
+                    },
+                    "Cancelar": function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
 
             function buscarMateriasPrimas(idProducto) {
                 $("#divCargandoLineas").removeAttr("hidden");
@@ -221,7 +261,10 @@
                     success: function(result){
                         $("#divCargandoLineas").attr("hidden", "true");
                         result.map(function (mp) {
-                            $("#tablaMP tbody").append("<tr><td>" + mp.Codigo + "</td><td>" + mp.Nombre + "</td><td></td><td></td></tr>")
+                            $("#tablaMP tbody").append("<tr><td>" + mp.Codigo + "</td><td>" + mp.Nombre + "</td><td class=" + '"cell-proveedor"'
+                                + "></td><td class="+'"cell-lote"'+"></td><td><input type="
+                                + '"button"' + "value=" + '"Cargar"' + " class=" + '"btn btn-primary btn-sm btn-cargar-linea"' + " onClick=" +
+                                '"cargarLinea(' + mp.Codigo + ')"' + "></td></tr>");
                         });
                         $("#divTablaMateriaPrima").removeAttr("hidden");
                     },
@@ -231,5 +274,34 @@
                  });
             }
         });
+
+        function cargarLinea(id) {
+            $("#idLinea").val(id);
+            $("#dialogCargarLote").dialog("open");
+            obtenerLotes(id);
+        }
+
+        function obtenerLotes(id) {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("ObtenerLotesPorLinea","Procesos")',
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify({ "idMateriaPrima": id }),
+                success: function (result) {
+                    result.Lotes.map(function (value) {
+                        $("#dialogSelectLote").append("<option value="+value.Id+">"+value.Nombre+"</option>");
+                    });
+                    result.Proveedores.map(function (value) {
+                        $("#dialogSelectProveedor").append("<option value=" + value.Id + ">" + value.Nombre + "</option>");
+                    });
+                    $("#textoCargandoLotes").attr("hidden", "true");
+                    $("#dialogCargarLoteInputs").removeAttr("hidden");
+                },
+                error: function (errorText) {
+                    console.log(errorText);
+                }
+            });
+        }
     </script>
 }

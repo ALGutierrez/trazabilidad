@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -234,6 +235,10 @@
     <Compile Include="Migrations\201805070355533_Otro-cambio-mas.Designer.cs">
       <DependentUpon>201805070355533_Otro-cambio-mas.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805110506058_Agregada_relacion_materiaprima_proveedor.cs" />
+    <Compile Include="Migrations\201805110506058_Agregada_relacion_materiaprima_proveedor.Designer.cs">
+      <DependentUpon>201805110506058_Agregada_relacion_materiaprima_proveedor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Contexto.cs" />
     <Compile Include="Models\Cosecha.cs" />
@@ -404,6 +409,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805070355533_Otro-cambio-mas.resx">
       <DependentUpon>201805070355533_Otro-cambio-mas.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805110506058_Agregada_relacion_materiaprima_proveedor.resx">
+      <DependentUpon>201805110506058_Agregada_relacion_materiaprima_proveedor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

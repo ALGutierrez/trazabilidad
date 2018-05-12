@@ -41,5 +41,14 @@ namespace Sw_Trazabilidad.Controllers
                 .Where(x => x.Id_Producto == idProducto).Select(x => new {Codigo = x.Materiaprima.IdMateria_Prima, Nombre = x.Materiaprima.Nombre}).ToList();
             return Json(materias_primas);
         }
+
+        [HttpPost]
+        public ActionResult ObtenerLotesPorLinea(int idMateriaPrima)
+        {
+            var lotes = db.Entradas.Include(x => x.MateriaPrima).Where(x => x.IdMateria_Prima == idMateriaPrima).Select(x => new {Id = x.Codigo_Entrada, Nombre = x.LoteEntrada }).ToList();
+            var proveedores = db.EmpresasProveedores.Where(x => x.MateriasPrimas.Any(y => y.IdMateria_Prima == idMateriaPrima)).Select(x => new {Id = x.IdEmpresa_Proveedor, Nombre = x.RazonSocial }).ToList();
+            var result = new { Lotes = lotes, Proveedores = proveedores };
+            return Json(result);
+        }
     }
 }

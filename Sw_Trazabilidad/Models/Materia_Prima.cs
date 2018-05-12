@@ -24,5 +24,6 @@ namespace Sw_Trazabilidad.Models
         public Tipo_MateriaPrima TipoMateriaPrima { get; set; }
 
         public virtual ICollection<Linea_Producto> LineasProducto { get; set; }
+        public virtual ICollection<Empresa_Proveedor> EmpresasProveedores { get; set; }
     }
 }

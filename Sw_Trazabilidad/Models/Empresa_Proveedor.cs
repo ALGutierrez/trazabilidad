@@ -19,5 +19,7 @@ namespace Sw_Trazabilidad.Models
         [Required]
         [MaxLength(45)]
         public string Direccion { get; set; }
+
+        public virtual ICollection<Materia_Prima> MateriasPrimas { get; set; }
     }
 }
