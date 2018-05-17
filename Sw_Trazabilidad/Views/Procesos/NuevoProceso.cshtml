@@ -5,7 +5,7 @@
 
 <h2>Nuevo Proceso</h2>
 <br />
-<form>
+<form method="post">
     <div class="form-horizontal">
         <div class="form-group">
             <label>Fecha:</label>
@@ -13,8 +13,8 @@
         </div>
         <div class="form-group">
             <label>Es una recepcion?</label>
-            <label><input id="radioSi" type="radio" name="EsRecepcion">Si</label>
-            <label><input id="radioNo" type="radio" name="EsRecepcion" checked>No</label>
+            <label><input id="radioSi" type="radio" name="EsRecepcion" value="true">Si</label>
+            <label><input id="radioNo" type="radio" name="EsRecepcion" value="false" checked>No</label>
         </div>
     </div>
     <br />
@@ -40,11 +40,11 @@
                         <div class="form-inline">
                             <div class="form-group">
                                 <label for="focusedInput">Codigo</label>
-                                <input name="CodigoProductoSalida" class="form-control" id="CodigoProductoSalida" type="text" style="width:100px" disabled>
+                                <input name="CodigoProductoSalida" class="form-control" id="CodigoProductoSalida" type="text" style="width:100px" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="inputPassword" style="margin-left: 20px">Producto</label>
-                                <input name="NombreProductoSalida" class="form-control EntradaProductoNombre" id="NombreProductoSalida" type="text" disabled>
+                                <input name="NombreProductoSalida" class="form-control EntradaProductoNombre" id="NombreProductoSalida" type="text" readonly>
                             </div>
                             <div class="form-group"><button id="btnBuscar" type="button" class="btn btn-primary btn-sm" style="margin-left:20px">Buscar</button></div>
                         </div>
@@ -88,6 +88,9 @@
             </thead>
             <tbody></tbody>
         </table>
+    </div>
+    <div id="inputsTablaMateriaPrima">
+
     </div>
 
     <div class="form-horizontal">
@@ -155,6 +158,11 @@
             <br />
         </div>
     </div>
+    <br />
+    <br />
+    <div style="text-align: center">
+        <input type="submit" value="Crear proceso" class="btn btn-success btn-lg"/>
+    </div>
 </form>
 
 <div id="dialogBuscarProducto" title="Buscar producto">
@@ -193,6 +201,8 @@
     <script>
         $(document).ready(function () {
 
+            var cantEntradas = 0;
+
             $("#radioSi").on("click", function () {
                 if ($("#radioSi").prop("checked", true)) {
                     $("#proveedor").removeAttr("hidden");
@@ -218,6 +228,7 @@
                 buttons: {
                     "Aceptar": function () {
                         var producto = $("#seleccionarProducto option:selected");
+                        console.log(producto.val());
                         $("#CodigoProductoSalida").val(producto.val());
                         $("#NombreProductoSalida").val(producto.text());
                         buscarMateriasPrimas(producto.val());
@@ -241,7 +252,11 @@
                             return $(this).text() == id;
                         }).closest("tr");
                         row.find(".cell-lote").html(lote.text());
-                        row.find(".cell-proveedor").html(proveedor.text())
+                        row.find(".cell-proveedor").html(proveedor.text());
+                        $("#inputsTablaMateriaPrima").append('<input type="hidden" name="entradas[' + cantEntradas + '].IdMateriaPrima" value="' + id + '"/>');
+                        $("#inputsTablaMateriaPrima").append('<input type="hidden" name="entradas[' + cantEntradas + '].IdProveedor" value="' + proveedor.val() + '"/>');
+                        $("#inputsTablaMateriaPrima").append('<input type="hidden" name="entradas[' + cantEntradas + '].Lote" value="' + lote.text() + '"/>');
+                        cantEntradas++;
                         $(this).dialog("close");
                     },
                     "Cancelar": function () {

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using Sw_Trazabilidad.Models.ViewModels;
 
 namespace Sw_Trazabilidad.Controllers
 {
@@ -28,8 +29,20 @@ namespace Sw_Trazabilidad.Controllers
         }
 
         [HttpPost]
-        public ActionResult NuevoProceso(string hola)
+        public ActionResult NuevoProceso(DateTime Fecha, bool EsRecepcion, string NombreP, int Cantidad, int CodigoProductoSalida, List<EntradaViewModel> Entradas,
+            int Gramaje, int Envase, int Cosecha)
         {
+            if (EsRecepcion)
+            {
+                var nuevoProceso = new Proceso
+                {
+                    Nombre = NombreP,
+                    Cantidad = Cantidad,
+                    Es_Recepcion = EsRecepcion,
+                    Fecha_Actividad = Fecha,
+                    Observaciones = "",
+                };
+            }
             return View();
         }
 
