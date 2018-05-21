@@ -21,6 +21,8 @@ namespace Sw_Trazabilidad.Controllers
 
         public ActionResult NuevoProducto()
         {
+            var mp = db.MateriasPrimas.ToList();
+            ViewBag.MPrimas = mp;
             return View();
         }
 
@@ -60,8 +62,9 @@ namespace Sw_Trazabilidad.Controllers
         }
 
         [HttpPost]
-        public ActionResult NuevoProducto(string NombreProd, string Descripcion)
+        public ActionResult NuevoProducto(string NombreProd, string Descripcion, List<Materia_Prima> mat)
         {
+            var matpri = db.MateriasPrimas.Find(mat);
             Producto producto = new Producto()
             {
                 Nombre = NombreProd,

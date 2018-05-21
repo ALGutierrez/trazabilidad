@@ -37,30 +37,30 @@ textarea {
     float: right;
     width: 40%
 }
-#customers {
+#materiasPrimas {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
 }
 
-    #customers td, #customers th {
+#materiasPrimas td, #materiasPrimas th {
         border: 1px solid #ddd;
         padding: 8px;
     }
 
-    #customers tr:nth-child(even) {
+#materiasPrimas tr:nth-child(even) {
         background-color: #f2f2f2;
     }
 
-    #customers tr:hover {
+#materiasPrimas tr:hover {
         background-color: #ddd;
     }
 
-    #customers th {
+    #materiasPrimas th {
         padding-top: 12px;
         padding-bottom: 12px;
         text-align: center;
-        background-color: #4682B4;
+        background-color: #3366ff;
         color: white;
     }
 

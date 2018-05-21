@@ -18,11 +18,87 @@
             <input name="Descripcion" type="text" class="form-control" id="descripcion" placeholder="Ingrese una descripcion opcional">
         </div>
     </div>
+<div class="row">
+    <div id="divTablaMateriaPrima_enProductos" class="col-lg-9">
+        <table class="table table-hover" style="width:100%" id="materiasPrimas" name="tableMP">
+            <thead class="bg-primary">
+                <tr>
+                    <th>
+                        Materia prima
+                    </th>
+                    <th>
+                        Tipo
+                    </th>
+                    <th>
+                        ID
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Alfreds Futterkiste</td>
+                    <td>Maria Anders</td>
+                    <td>Germany</td>
+                </tr>
+                <tr>
+                    <td>Berglunds snabbköp</td>
+                    <td>Christina Berglund</td>
+                    <td>Sweden</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-lg-3">
+        <button id="btnAgregar" type="button" class="btn btn-primary">Agregar</button>
+    </div>
+</div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button type="submit" class="btn btn-default">Aceptar</button>
+            <button id="btnAceptar" type="submit" class="btn btn-default">Aceptar</button>
         </div>
     </div>
 </form>
+<div id="dialogBuscarMateriaPrima" title="Buscar materia prima">
+    <label for="seleccionarMateriaPrima">Materia prima:</label>
+    <select id="seleccionarMateriaPrima" class="form-control">
+        @if (ViewBag.MPrimas != null)
+        {
+            foreach (var materia in (List<Sw_Trazabilidad.Models.Materia_Prima>)ViewBag.MPrimas)
+            {
+                <option value="@materia.IdMateria_Prima">@materia.Nombre</option>
+            }
+        }
+    </select>
+</div>
 
+@section scripts{
+<link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css" />
+<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+<script>
+    $(document).ready(function () {
 
+        $("#btnAgregar").on("click", function () {
+            $("#dialogBuscarMateriaPrima").dialog("open");
+        });
+
+        $("#dialogBuscarMateriaPrima").dialog({
+            autoOpen: false,
+            modal: true,
+            buttons: {
+                "Aceptar": function () {
+                    var materia = $("#seleccionarMateriaPrima option:selected");
+                    console.log(materia.val());
+                    $("#CodigoProductoSalida").val(producto.val());
+                    $("#NombreProductoSalida").val(producto.text());
+                    buscarMateriasPrimas(producto.val());
+                    $(this).dialog("close");
+                },
+                "Cancelar": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    });
+</script>
+
+}
