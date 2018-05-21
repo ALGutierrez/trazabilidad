@@ -1,6 +1,7 @@
 ﻿using Sw_Trazabilidad.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -62,17 +63,28 @@ namespace Sw_Trazabilidad.Controllers
         }
 
         [HttpPost]
-        public ActionResult NuevoProducto(string NombreProd, string Descripcion, List<Materia_Prima> mat)
+        public ActionResult NuevoProducto(string NombreProd, string Descripcion, List<Materia_Prima> materiasPrimas)
         {
-            var matpri = db.MateriasPrimas.Find(mat);
             Producto producto = new Producto()
             {
                 Nombre = NombreProd,
-                Descripcion = Descripcion
+                Descripcion = Descripcion,
+                LineasProducto = new List<Linea_Producto>()
             };
-
             db.Productos.Add(producto);
+
+            foreach (var materia in materiasPrimas)
+            {
+                Linea_Producto linea = new Linea_Producto
+                {
+                    IdMateria_Prima = materia.IdMateria_Prima,
+                    Id_Producto = producto.Id_Producto
+                };
+                db.LineasProductos.Add(linea);
+            }
             db.SaveChanges();
+            var mp = db.MateriasPrimas.ToList();
+            ViewBag.MPrimas = mp;
             return View();
         }
 

@@ -27,29 +27,20 @@
                         Materia prima
                     </th>
                     <th>
-                        Tipo
-                    </th>
-                    <th>
                         ID
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Alfreds Futterkiste</td>
-                    <td>Maria Anders</td>
-                    <td>Germany</td>
-                </tr>
-                <tr>
-                    <td>Berglunds snabbköp</td>
-                    <td>Christina Berglund</td>
-                    <td>Sweden</td>
-                </tr>
+
             </tbody>
         </table>
     </div>
     <div class="col-lg-3">
         <button id="btnAgregar" type="button" class="btn btn-primary">Agregar</button>
+    </div>
+    <div id="divInputsMP">
+
     </div>
 </div>
     <div class="form-group">
@@ -77,6 +68,8 @@
 <script>
     $(document).ready(function () {
 
+        cantMateriasPrimas = 0;
+
         $("#btnAgregar").on("click", function () {
             $("#dialogBuscarMateriaPrima").dialog("open");
         });
@@ -87,10 +80,11 @@
             buttons: {
                 "Aceptar": function () {
                     var materia = $("#seleccionarMateriaPrima option:selected");
-                    console.log(materia.val());
-                    $("#CodigoProductoSalida").val(producto.val());
-                    $("#NombreProductoSalida").val(producto.text());
-                    buscarMateriasPrimas(producto.val());
+                    $("#materiasPrimas tbody").append('<tr><td>' + materia.text() + '</td><td>' + materia.val() + '</td></tr>');
+                    $("#divInputsMP").append('<input type="hidden" name="materiasPrimas[' + cantMateriasPrimas + '].IdMateria_Prima" value="' + materia.val() + '">');
+                    $("#divInputsMP").append('<input type="hidden" name="materiasPrimas[' + cantMateriasPrimas + '].Nombre" value="' + materia.text() + '">');
+                    $("#seleccionarMateriaPrima option:selected").remove();
+                    cantMateriasPrimas++;
                     $(this).dialog("close");
                 },
                 "Cancelar": function () {
